@@ -59,7 +59,7 @@ class CreateGame extends React.Component {
         console.log(url);
         let passedValue = {
             "pitId": pitId,
-            "gameId": 1,
+            "gameId": this.state.gameBord.gameId,
             "playerId": playerId
         };
         const config = {

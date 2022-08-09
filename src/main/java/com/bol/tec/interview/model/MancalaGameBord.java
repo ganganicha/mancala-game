@@ -52,6 +52,7 @@ public class MancalaGameBord {
             }
             pits[i] = pit;
         }
+        this.winner = -1;
     }
 
 

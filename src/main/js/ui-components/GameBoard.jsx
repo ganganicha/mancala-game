@@ -46,7 +46,7 @@ class GameBoard extends React.Component {
         const { gameBord } = this.props;
         return (
             <div>
-                <lable id={gameBord.gameId}>Game No : {gameBord.gameId}</lable>
+                <lable id={gameBord.gameId}>Game No : {gameBord.gameId}</lable><br></br>
                 <lable >Is is Player : {gameBord.playerTurn} Turn</lable>
                 <div style={{ marginTop: "100px" }}>
                 <lable >Player 1</lable>
