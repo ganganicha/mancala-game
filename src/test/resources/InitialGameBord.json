@@ -1,0 +1,107 @@
+{
+  "gameId": 1,
+  "noOfStones": 6,
+  "noOfPits": 6,
+  "noOfPlayers": 2,
+  "pits": [
+    {
+      "pitId": 0,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 1,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 2,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 3,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 4,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 5,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 6,
+      "noOfStones": 0,
+      "pitType": "BIG_PIT",
+      "empty": false,
+      "playerId": 0
+    },
+    {
+      "pitId": 7,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 8,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 9,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 10,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 11,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 12,
+      "noOfStones": 6,
+      "pitType": "SMALL_PIT",
+      "empty": false,
+      "playerId": 1
+    },
+    {
+      "pitId": 13,
+      "noOfStones": 0,
+      "pitType": "BIG_PIT",
+      "empty": false,
+      "playerId": 1
+    }
+  ],
+  "playerTurn": 0
+}
