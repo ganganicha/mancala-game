@@ -1,6 +1,7 @@
 import React from "react";
 import Pit from "./Pit";
 import Grid from "@material-ui/core/Grid";
+import {Box} from "@material-ui/core";
 
 class GameBoard extends React.Component {
 
@@ -42,13 +43,55 @@ class GameBoard extends React.Component {
         return mancalaPits;
     }
 
-    render() {
+    render(){
+        const { gameBord } = this.props;
+        return (
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={2}></Grid>
+                    <Grid container item xs={8} spacing={2}>
+                        <Grid item xs={12} style={{ display: "flex", justifyContent: "space-around" }}>
+                            <lable id={gameBord.gameId}>Game No : {gameBord.gameId}</lable>
+                            <lable>  Turn : Player {gameBord.playerTurn + 1}</lable>
+                        </Grid>
+                        <Grid item xs={12} style={{ display: "flex", justifyContent: "space-around" }}>
+                            <label>Player 1</label>
+                        </Grid>
+                        <Grid item xs={12} spacing={2}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={2}>
+                                    <Pit stones={gameBord.pits ? gameBord.pits[6].noOfStones : 0} pitName="Player 1" />
+                                </Grid>
+                                <Grid container item xs={8} spacing={2}>
+                                    <Grid item xs={12} style={{ display: "flex", justifyContent: "space-around" }}                                    >
+                                        {this.getPlaterOneMancalaPits(gameBord)}
+                                    </Grid>
+                                    <Grid item xs={12} style={{ display: "flex", justifyContent: "space-around" }}                                    >
+                                        {this.getPlaterTwoMancalaPits(gameBord)}
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Pit stones={gameBord.pits ? gameBord.pits[13].noOfStones : 0} pitName="Player 2" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} style={{ display: "flex", justifyContent: "space-around" }}>
+                            <label>Player 2</label>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={2}></Grid>
+                </Grid>
+            </Box>
+        )
+    }
+
+    renderEx() {
         const { gameBord } = this.props;
         return (
             <div>
                 <lable id={gameBord.gameId}>Game No : {gameBord.gameId}</lable><br></br>
                 <lable >Is is Player : {gameBord.playerTurn} Turn</lable>
-                <div style={{ marginTop: "100px" }}>
+                <div style={{ marginTop: "100px", flexGrow: "1" }}>
                 <lable >Player 1</lable>
                     <Grid container spacing={10}>
                         <Grid style={{ marginTop: '5%' }} item xs={2}>

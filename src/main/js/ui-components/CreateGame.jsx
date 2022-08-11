@@ -113,7 +113,7 @@ class CreateGame extends React.Component {
 
         return (
             <React.Fragment>
-                <div>
+                {Object.keys(gameBord).length === 0 && <div>
                     <label for="noOfPlayers">Number Of Players:</label>
                     <input type="text" id="noOfPlayers" name="noOfPlayers" value={data.noOfPlayers} onChange={(e) => {
                         let val = e.target.value;
@@ -124,7 +124,7 @@ class CreateGame extends React.Component {
                                 noOfStones: data.noOfStones
                             }
                         });
-                    }} />
+                    }}/>
                     <label for="noOfPits">Number Of Pits:</label>
                     <input type="text" id="noOfPits" name="noOfPits" value={data.noOfPits} onChange={(e) => {
                         let val = e.target.value;
@@ -135,7 +135,7 @@ class CreateGame extends React.Component {
                                 noOfPlayers: data.noOfPlayers
                             }
                         });
-                    }} />
+                    }}/>
                     <label for="noOfStones">Number Of Stones per Pit:</label>
                     <input type="text" id="noOfStones" name="noOfStones" value={data.noOfStones} onChange={(e) => {
                         let val = e.target.value;
@@ -146,9 +146,9 @@ class CreateGame extends React.Component {
                                 noOfPits: data.noOfPits
                             }
                         });
-                    }} />
-                    <input type="Submit" onClick={this.handleMancalaPitClick} value="Submit" />
-                </div>
+                    }}/>
+                    <input type="Submit" onClick={this.handleMancalaPitClick} value="Submit"/>
+                </div>}
                 {gameBord && Object.keys(gameBord).length !== 0 && <GameBoard gameBord={gameBord} simplifiedFunction={this.simplifiedFunction} />}
             </React.Fragment>
         )
