@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import GameBoard from "./GameBoard";
+import {Alert} from "@material-ui/lab";
+import {Link} from "@material-ui/core";
 
 
 class CreateGame extends React.Component {
@@ -16,7 +18,8 @@ class CreateGame extends React.Component {
                 "noOfPits": 6,
                 "noOfStones": 6
             },
-            gameBord: {}
+            gameBord: {},
+            gameConcluded: false
         }
 
         const passData = (data) => {
@@ -25,10 +28,8 @@ class CreateGame extends React.Component {
     }
 
 
-
-
     handleMancalaPitClick(e) {
-        const { data } = this.state;
+        const {data} = this.state;
         console.log("******", data)
 
         const url = 'mancalagame/api/create-game';
@@ -46,7 +47,7 @@ class CreateGame extends React.Component {
         axios.post(url, passedValue, config).then(response => {
             let res = response.data;
             console.log("response : ", res);
-            this.setState({ gameBord: res });
+            this.setState({gameBord: res});
         });
 
     }
@@ -70,8 +71,11 @@ class CreateGame extends React.Component {
         axios.post(url, passedValue, config).then(response => {
             let res = response.data;
             console.log("response : ", res);
-            this.setState({ gameBord: res });
-            
+            this.setState({
+                gameBord: res,
+                gameConcluded: res.winner !== -1
+            });
+
         });
 
 
@@ -108,12 +112,12 @@ class CreateGame extends React.Component {
 
 
     render() {
-        const { data, gameBord } = this.state;
+        const {data, gameBord} = this.state;
         console.log(gameBord);
 
         return (
             <React.Fragment>
-                {Object.keys(gameBord).length === 0 && <div>
+                {!this.state.gameConcluded && Object.keys(gameBord).length === 0 && <div>
                     <label for="noOfPlayers">Number Of Players:</label>
                     <input type="text" id="noOfPlayers" name="noOfPlayers" value={data.noOfPlayers} onChange={(e) => {
                         let val = e.target.value;
@@ -136,7 +140,7 @@ class CreateGame extends React.Component {
                             }
                         });
                     }}/>
-                    <label for="noOfStones">Number Of Stones per Pit:</label>
+                    <label for="noOfStones">Stones per Pit:</label>
                     <input type="text" id="noOfStones" name="noOfStones" value={data.noOfStones} onChange={(e) => {
                         let val = e.target.value;
                         this.setState({
@@ -149,7 +153,29 @@ class CreateGame extends React.Component {
                     }}/>
                     <input type="Submit" onClick={this.handleMancalaPitClick} value="Submit"/>
                 </div>}
-                {gameBord && Object.keys(gameBord).length !== 0 && <GameBoard gameBord={gameBord} simplifiedFunction={this.simplifiedFunction} />}
+                {this.state.gameConcluded &&
+                    <Alert severity="success">Player {gameBord.winner + 1} Won!
+                        <Link
+                            component="button"
+                            variant="body2"
+                            onClick={() => {
+                                this.setState({
+                                    open: true,
+                                    data: {
+                                        "noOfPlayers": 2,
+                                        "noOfPits": 6,
+                                        "noOfStones": 6
+                                    },
+                                    gameBord: {},
+                                    gameConcluded: false
+                                })
+                            }}
+                        >    Click to Start New Game ... </Link>
+                    </Alert>
+                }
+                {gameBord && Object.keys(gameBord).length !== 0 &&
+                    <GameBoard disabled={this.state.gameConcluded} gameBord={gameBord}
+                               simplifiedFunction={this.simplifiedFunction}/>}
             </React.Fragment>
         )
 
