@@ -150,4 +150,18 @@ public class MancalaServiceTest {
 
     }
 
+    @Test
+    public void handleAddingStoneToSelectedPit() throws IOException {
+
+        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        initialGameBord.getPits()[4].setNoOfStones(14);
+        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBord gameBord = mancalaService.playGame(1,0,4);
+        assertEquals(gameBord.getPlayerTurn(), 1);
+        assertEquals(gameBord.getPits()[4].getNoOfStones(), 1);
+
+
+
+    }
+
 }

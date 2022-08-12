@@ -24,35 +24,39 @@ public class MancalaService {
         return mancalaGameBordRepository.save(mancalaGameBord);
     }
 
-
     public MancalaGameBord playGame(Integer gameId, Integer playerId, Integer requestedPitId) {
 
+        MancalaGameBord gameBord = null;
         Optional<MancalaGameBord> mancalaGameBord = mancalaGameBordRepository.findById(gameId);
         if (mancalaGameBord.isPresent()) {
-            MancalaGameBord gameBord = mancalaGameBord.get();
+            gameBord = mancalaGameBord.get();
             //check is the correct player turn
             if (gameBord.getPlayerTurn() == playerId) {
                 // get the correct pit from the array based on the player
+//                if(gameBord.getPits().length >= requestedPitId) {
+//                    Pit pit = gameBord.getPits()[requestedPitId];
+//                }
                 Optional<Pit> optionalPit = Arrays.stream(gameBord.getPits())
-                        .filter(pit -> pit.getPitId() == requestedPitId).findFirst(); // get byindex
-                if (optionalPit.isPresent()) {
+                        .filter(pit -> pit.getPitId() == requestedPitId).findFirst();
+
+                if (optionalPit.isPresent() && optionalPit.get().getNoOfStones() > 0) {
                     Pit pit = optionalPit.get();
-                    int selectedPitId = pit.getPitId();
+                    int nextPitId = pit.getPitId();
                     int noOfStones = pit.getNoOfStones();
+                    gameBord.getPits()[requestedPitId].emptiedPit();
                     while (noOfStones > 0) {
-                        selectedPitId = (selectedPitId + 1) % (gameBord.getPits().length); //get nextpit
-                        Pit rightPit = gameBord.getPits()[selectedPitId];
+                        nextPitId = (nextPitId + 1) % (gameBord.getPits().length); //get nextpitId
+                        Pit rightPit = gameBord.getPits()[nextPitId];
                         if (rightPit.getPlayerId() != playerId && rightPit.getPitType() == PitType.BIG_PIT) {
                             continue;
                         }
-                        gameBord.getPits()[selectedPitId].addOneStone();
+                        gameBord.getPits()[nextPitId].addOneStone();
                         noOfStones--;
 
                     }
-                    handleLastStoneWithEmptyPit(playerId, gameBord, selectedPitId);
-                    int nextPlayerId = getNextPlayerTurn(playerId, selectedPitId, gameBord.getPits(), gameBord.getNoOfPlayers());
+                    handleLastStoneWithEmptyPit(playerId, gameBord, nextPitId);
+                    int nextPlayerId = getNextPlayerTurn(playerId, nextPitId, gameBord.getPits(), gameBord.getNoOfPlayers());
                     gameBord.setPlayerTurn(nextPlayerId);
-                    gameBord.getPits()[requestedPitId].emptiedPit();
                     if(isGameOver(gameBord.getPits(),playerId,gameBord.getNoOfPits())){
                         addPLayerRemainingStonesToBigPit(gameBord.getPits(),nextPlayerId);
                         gameBord.setWinner(getWinner(gameBord.getPits()));
@@ -60,11 +64,9 @@ public class MancalaService {
                     mancalaGameBordRepository.save(gameBord);
                     return gameBord;
                 }
-            } else {
-                return gameBord;
             }
         }
-        return null;
+        return gameBord;
     }
 
     private int getNextPlayerTurn(int playerId, int lastPid, Pit[] pits, int noOfPlayers) {

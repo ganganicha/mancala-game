@@ -10,7 +10,7 @@ class CreateGame extends React.Component {
     constructor(props) {
         super(props);
         this.handleMancalaPitClick = this.handleMancalaPitClick.bind(this);
-        this.simplifiedFunction = this.simplifiedFunction.bind(this);
+        this.clickPit = this.clickPit.bind(this);
         this.state = {
             open: true,
             data: {
@@ -32,7 +32,7 @@ class CreateGame extends React.Component {
         const {data} = this.state;
         console.log("******", data)
 
-        const url = 'mancalagame/api/create-game';
+        const url = 'mancalagame/create-game';
         console.log(url);
         let passedValue = {
             "noOfPlayers": data.noOfPlayers,
@@ -52,11 +52,11 @@ class CreateGame extends React.Component {
 
     }
 
-    simplifiedFunction(pitId, playerId) {
+    clickPit(pitId, playerId) {
 
         console.log("******", pitId, playerId)
 
-        const url = 'mancalagame/api/play';
+        const url = 'mancalagame/play';
         console.log(url);
         let passedValue = {
             "pitId": pitId,
@@ -175,7 +175,7 @@ class CreateGame extends React.Component {
                 }
                 {gameBord && Object.keys(gameBord).length !== 0 &&
                     <GameBoard disabled={this.state.gameConcluded} gameBord={gameBord}
-                               simplifiedFunction={this.simplifiedFunction}/>}
+                               clickPit={this.clickPit}/>}
             </React.Fragment>
         )
 

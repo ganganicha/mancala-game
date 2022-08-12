@@ -8,7 +8,7 @@ class GameBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            simplifiedFunction: props.simplifiedFunction
+            clickPit: props.clickPit
         }
     }
 
@@ -20,7 +20,7 @@ class GameBoard extends React.Component {
         }));
         for (let i = 5; i >= 0; i--) {
             mancalaPits.push(<Grid item>
-                <Pit id={i} playerId={0} pitName={"Pit " + (i + 1)} simplifiedFunction={this.state.simplifiedFunction}
+                <Pit id={i} playerId={0} pitName={"Pit " + (i + 1)} clickPit={this.state.clickPit}
                      stones={platerOneMancalaPits[0] ? platerOneMancalaPits[0][i].noOfStones : 0}/>
             </Grid>)
         }
@@ -37,7 +37,7 @@ class GameBoard extends React.Component {
         for (let i = 0; i < 6; i++) {
             mancalaPits.push(<Grid item>
                 <Pit id={platerTwoMancalaPits[0][i].pitId} playerId={1} pitName={"Pit " + (i + 1)}
-                     simplifiedFunction={this.state.simplifiedFunction}
+                     clickPit={this.state.clickPit}
                      stones={platerTwoMancalaPits[0] ? platerTwoMancalaPits[0][i].noOfStones : 0}/>
             </Grid>)
         }
