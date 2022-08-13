@@ -36,21 +36,19 @@ public class Pit implements Serializable {
         PlayerId = playerId;
     }
 
-    public int addOneStone() {
-        this.noOfStones = this.noOfStones +1 ;
-        this.setEmpty(false);
-        return noOfStones;
-    }
-
-    public int emptiedPit() {
+    public int empty() {
         this.noOfStones = 0 ;
         this.setEmpty(true);
         return noOfStones;
     }
 
-    public int addBulkStones(int noOfStones) {
+    public int addStones(int noOfStones) {
         this.noOfStones = this.getNoOfStones() + noOfStones ;
         this.setEmpty(false);
         return noOfStones;
+    }
+
+    public boolean isPlayable(){
+        return this.getNoOfStones() > 0 && this.pitType.equals(PitType.SMALL_PIT);
     }
 }

@@ -30,9 +30,4 @@ public class MancalaController {
                 gamePlayRequest.getPitId());
     }
 
-    @GetMapping(value = "get-game", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public MancalaGameBord getGame() {
-        return mancalaService.getGame(1);
-    }
 }
