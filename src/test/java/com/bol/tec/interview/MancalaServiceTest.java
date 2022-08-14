@@ -1,8 +1,8 @@
 package com.bol.tec.interview;
 
 import com.bol.tec.interview.dto.GameCreateRequest;
-import com.bol.tec.interview.model.MancalaGameBord;
-import com.bol.tec.interview.repository.MancalaGameBordRepository;
+import com.bol.tec.interview.model.MancalaGameBoard;
+import com.bol.tec.interview.repository.MancalaGameBoardRepository;
 import com.bol.tec.interview.service.MancalaService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +29,7 @@ public class MancalaServiceTest {
     MancalaService mancalaService;
 
     @Mock
-    MancalaGameBordRepository mancalaGameBordRepository;
+    MancalaGameBoardRepository mancalaGameBoardRepository;
 
     private ObjectMapper objectMapper;
 
@@ -48,8 +47,8 @@ public class MancalaServiceTest {
         gameCreateRequest.setNoOfPits(6);
         gameCreateRequest.setNoOfPlayers(2);
         gameCreateRequest.setNoOfStones(6);
-        when(mancalaGameBordRepository.save(any())).thenReturn(new MancalaGameBord(gameCreateRequest));
-        MancalaGameBord gameBord = mancalaService.createGame(gameCreateRequest);
+        when(mancalaGameBoardRepository.save(any())).thenReturn(new MancalaGameBoard(gameCreateRequest));
+        MancalaGameBoard gameBord = mancalaService.createGame(gameCreateRequest);
         assertEquals(gameBord.getPlayerTurn(), 0);
         assertEquals(gameBord.getPits().length, 14);
     }
@@ -58,9 +57,9 @@ public class MancalaServiceTest {
     @Test
     public void successGame1() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,0,4);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,0,4);
         assertEquals(gameBord.getPlayerTurn(), 1);
         assertEquals(gameBord.getPits()[4].getNoOfStones(), 0);
         assertEquals(gameBord.getPits()[5].getNoOfStones(), 7);
@@ -74,20 +73,20 @@ public class MancalaServiceTest {
     @Test
     public void tryWithIncorrectPlayer() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,1,4);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,1,4);
         assertEquals(gameBord.getPlayerTurn(), 0);
     }
 
     @Test
     public void skipOpponentBigPit() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
         initialGameBord.getPits()[12].setNoOfStones(8);
         initialGameBord.setPlayerTurn(1);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,1,12);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,1,12);
         assertEquals(gameBord.getPlayerTurn(), 0);
         assertEquals(gameBord.getPits()[6].getNoOfStones(), 0);
         assertEquals(gameBord.getPits()[7].getNoOfStones(), 7);
@@ -97,11 +96,11 @@ public class MancalaServiceTest {
     @Test
     public void addingToOwnBigPit() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
         initialGameBord.getPits()[5].setNoOfStones(1);
         initialGameBord.setPlayerTurn(0);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,0,5);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,0,5);
         assertEquals(gameBord.getPlayerTurn(), 0);
         assertEquals(gameBord.getPits()[6].getNoOfStones(), 1);
         assertEquals(gameBord.getPits()[5].getNoOfStones(), 0);
@@ -111,12 +110,12 @@ public class MancalaServiceTest {
     @Test
     public void addingToOwnEmptyPit() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
         initialGameBord.getPits()[4].setNoOfStones(1);
         initialGameBord.getPits()[5].setNoOfStones(0);
         initialGameBord.setPlayerTurn(0);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,0,4);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,0,4);
         assertEquals(gameBord.getPlayerTurn(), 1);
         assertEquals(gameBord.getPits()[4].getNoOfStones(), 0);
         assertEquals(gameBord.getPits()[5].getNoOfStones(), 0);
@@ -128,7 +127,7 @@ public class MancalaServiceTest {
     @Test
     public void handleWinningmoment() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
         initialGameBord.getPits()[0].setNoOfStones(0);
         initialGameBord.getPits()[0].setEmpty(true);
         initialGameBord.getPits()[1].setNoOfStones(0);
@@ -141,8 +140,8 @@ public class MancalaServiceTest {
         initialGameBord.getPits()[4].setEmpty(true);
         initialGameBord.getPits()[5].setNoOfStones(2);
         initialGameBord.setPlayerTurn(0);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,0,5);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,0,5);
         assertEquals(gameBord.getPlayerTurn(), 1);
         assertEquals(gameBord.getPits()[13].getNoOfStones(), 37);
         assertEquals(gameBord.getWinner(), 1);
@@ -153,15 +152,23 @@ public class MancalaServiceTest {
     @Test
     public void handleAddingStoneToSelectedPit() throws IOException {
 
-        MancalaGameBord initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBord.class);
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
         initialGameBord.getPits()[4].setNoOfStones(14);
-        when(mancalaGameBordRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
-        MancalaGameBord gameBord = mancalaService.playGame(1,0,4);
+        when(mancalaGameBoardRepository.findById(anyInt())).thenReturn(Optional.of(initialGameBord));
+        MancalaGameBoard gameBord = mancalaService.playGame(1,0,4);
         assertEquals(gameBord.getPlayerTurn(), 1);
         assertEquals(gameBord.getPits()[4].getNoOfStones(), 1);
+    }
 
 
+    @Test
+    public void handleSameAmountInBigPit() throws IOException {
 
+        MancalaGameBoard initialGameBord = objectMapper.readValue(new File("src/test/resources/InitialGameBord.json"), MancalaGameBoard.class);
+        initialGameBord.getPits()[6].setNoOfStones(14);
+        initialGameBord.getPits()[13].setNoOfStones(14);
+        int winner = mancalaService.getWinner(initialGameBord.getPits());
+        assertEquals(winner, 0);
     }
 
 }

@@ -100,45 +100,6 @@ class GameBoard extends React.Component {
     )
     }
 
-    renderEx() {
-        const {gameBord} = this.props;
-        return (
-            <div>
-                <lable id={gameBord.gameId}>Game No : {gameBord.gameId}</lable>
-                <br></br>
-                <lable>Is is Player : {gameBord.playerTurn} Turn</lable>
-                <div style={{marginTop: "100px", flexGrow: "1"}}>
-                    <lable>Player 1</lable>
-                    <Grid container spacing={10}>
-                        <Grid style={{marginTop: '5%'}} item xs={2}>
-                            <Pit
-                                stones={gameBord.pits ? gameBord.pits[6].noOfStones : 0}
-                                pitName="Player 1"/>
-                            <lable>Player 1</lable>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Grid container spacing={5}>
-                                {this.getPlaterOneMancalaPits(gameBord)}
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={8} style={{paddingLeft: "370px"}}>
-                            <lable>Player 2</lable>
-                            <Grid container spacing={5}>
-                                {this.getPlaterTwoMancalaPits(gameBord)}
-                            </Grid>
-                        </Grid>
-                        <Grid style={{marginTop: '-5%', marginleft: "-200px"}} item xs={2}>
-                            <Pit
-                                stones={gameBord.pits ? gameBord.pits[13].noOfStones : 0}
-                                pitName="Player 2"/>
-                            <lable>Player 2</lable>
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
-        )
-    }
-
 }
 
 export default GameBoard;

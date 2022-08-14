@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class MancalaGameBord {
+public class MancalaGameBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class MancalaGameBord {
     @Column
     int winner;
 
-    public MancalaGameBord() {
+    public MancalaGameBoard() {
     }
 
-    public MancalaGameBord(GameCreateRequest gameBoardRequest) {
+    public MancalaGameBoard(GameCreateRequest gameBoardRequest) {
         this.noOfPlayers = gameBoardRequest.getNoOfPlayers();
         this.noOfPits = gameBoardRequest.getNoOfPits();
         this.noOfStones = gameBoardRequest.getNoOfStones();
