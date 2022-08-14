@@ -55,5 +55,9 @@ public class MancalaGameBord {
         this.winner = -1;
     }
 
+    public Pit getOppositePit(Pit pit) {
+        return this.pits[this.noOfPlayers * this.noOfPits - pit.getPitId()];
+
+    }
 
 }
