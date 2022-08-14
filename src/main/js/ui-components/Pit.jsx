@@ -25,7 +25,7 @@ class Pit extends React.Component {
 
         return (
             <Grid style={{ height: "100%" }}>
-                <Button style={{ height: "100%" }} variant="outlined" id={this.props.id}
+                <Button disabled={this.props.clickable && (this.props.stones > 0) ? false : true} style={{ height: "100%" }} variant="outlined" id={this.props.id}
                         onClick={() => this.props.clickPit(this.props.id,this.props.playerId)}>
                     {this.props.stones}
                 </Button>

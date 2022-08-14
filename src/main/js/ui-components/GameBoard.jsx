@@ -21,7 +21,8 @@ class GameBoard extends React.Component {
         for (let i = 5; i >= 0; i--) {
             mancalaPits.push(<Grid item>
                 <Pit id={i} playerId={0} pitName={"Pit " + (i + 1)} clickPit={this.state.clickPit}
-                     stones={platerOneMancalaPits[0] ? platerOneMancalaPits[0][i].noOfStones : 0}/>
+                     stones={platerOneMancalaPits[0] ? platerOneMancalaPits[0][i].noOfStones : 0}
+                     clickable={gameBord.playerTurn === 0}/>
             </Grid>)
         }
         return mancalaPits;
@@ -38,7 +39,8 @@ class GameBoard extends React.Component {
             mancalaPits.push(<Grid item>
                 <Pit id={platerTwoMancalaPits[0][i].pitId} playerId={1} pitName={"Pit " + (i + 1)}
                      clickPit={this.state.clickPit}
-                     stones={platerTwoMancalaPits[0] ? platerTwoMancalaPits[0][i].noOfStones : 0}/>
+                     stones={platerTwoMancalaPits[0] ? platerTwoMancalaPits[0][i].noOfStones : 0}
+                     clickable={gameBord.playerTurn === 1}/>
             </Grid>)
         }
         return mancalaPits;
@@ -66,7 +68,7 @@ class GameBoard extends React.Component {
                                 }}>
                                     <Grid item xs={2}>
                                         <Pit stones={gameBord.pits ? gameBord.pits[6].noOfStones : 0}
-                                             pitName="Player 1"/>
+                                             pitName="Player 1" clickable={false}/>
                                     </Grid>
                                 </Badge>
                                 <Grid container item xs={8} spacing={2}>
@@ -83,7 +85,7 @@ class GameBoard extends React.Component {
                                 }}>
                                 <Grid item xs={2}>
                                     <Pit stones={gameBord.pits ? gameBord.pits[13].noOfStones : 0}
-                                         pitName="Player 2"/>
+                                         pitName="Player 2" clickable={false}/>
                                 </Grid>
                             </Badge>
                         </Grid>
